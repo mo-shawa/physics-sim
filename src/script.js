@@ -49,21 +49,6 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-/**
- * Textures
- */
-const textureLoader = new THREE.TextureLoader()
-const cubeTextureLoader = new THREE.CubeTextureLoader()
-
-const environmentMapTexture = cubeTextureLoader.load([
-	'/textures/environmentMaps/0/px.png',
-	'/textures/environmentMaps/0/nx.png',
-	'/textures/environmentMaps/0/py.png',
-	'/textures/environmentMaps/0/ny.png',
-	'/textures/environmentMaps/0/pz.png',
-	'/textures/environmentMaps/0/nz.png',
-])
-
 // Physics
 
 // Contact Material
@@ -97,7 +82,6 @@ const sphereGeometry = new THREE.SphereGeometry(1, 20, 20)
 const sphereMaterial = new THREE.MeshStandardMaterial({
 	metalness: 0.3,
 	roughness: 0.4,
-	envMap: environmentMapTexture,
 })
 
 const createSphere = (radius, position) => {
@@ -166,12 +150,11 @@ world.addBody(floorBody)
  * Floor
  */
 const floor = new THREE.Mesh(
-	new THREE.PlaneGeometry(10, 10),
+	new THREE.PlaneGeometry(100, 100),
 	new THREE.MeshStandardMaterial({
 		color: '#777777',
 		metalness: 0.3,
 		roughness: 0.4,
-		envMap: environmentMapTexture,
 		envMapIntensity: 0.5,
 	})
 )
@@ -226,7 +209,7 @@ const camera = new THREE.PerspectiveCamera(
 	75,
 	sizes.width / sizes.height,
 	0.1,
-	100
+	1000
 )
 camera.position.set(-3, 3, 3)
 scene.add(camera)
