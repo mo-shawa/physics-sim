@@ -26,7 +26,6 @@ const debugObject = {
 	reset: () => {
 		for (const object of objectsToUpdate) {
 			// Cannon housekeeping
-			object.body.removeEventListener('collide', playHitSound)
 			world.removeBody(object.body)
 
 			// Three
@@ -144,7 +143,6 @@ const createBox = (width, height, depth, position) => {
 		mass: 2,
 	})
 	body.position.copy(position)
-	body.addEventListener('collide', playHitSound)
 	world.addBody(body)
 
 	objectsToUpdate.push({ mesh, body })
