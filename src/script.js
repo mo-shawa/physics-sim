@@ -50,17 +50,6 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-// Sounds
-const hitSound = new Audio('/sounds/hit.mp3')
-
-const playHitSound = (collision) => {
-	const impactForce = collision.contact.getImpactVelocityAlongNormal()
-	if (impactForce < 0.15) return
-	hitSound.volume = Math.min(1, Math.abs(impactForce))
-	hitSound.currentTime = 0
-	hitSound.play()
-}
-
 /**
  * Textures
  */
@@ -102,21 +91,6 @@ world.broadphase = new CANNON.SAPBroadphase(world)
 // Objects that are still and have been for some time can be allowed to go to "sleep" with world.allowsleep
 // again massively reducing redundant calculations and better for low end devices/phones etc.
 world.allowSleep = true
-
-// Sphere
-/* const sphereShape = new CANNON.Sphere(0.5)
-const sphereBody = new CANNON.Body({
-	mass: 1,
-	position: new CANNON.Vec3(0, 3, 0),
-	shape: sphereShape,
-})
-
-sphereBody.applyLocalForce(
-	new CANNON.Vec3(150, 90, 0),
-	new CANNON.Vec3(0, 0, 0)
-)
-
-world.addBody(sphereBody) */
 
 let objectsToUpdate = []
 
@@ -189,22 +163,6 @@ const floorBody = new CANNON.Body({
 floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1, 0, 0), Math.PI / 2)
 
 world.addBody(floorBody)
-
-/**
- * Test sphere
- */
-/* const sphere = new THREE.Mesh(
-	new THREE.SphereGeometry(0.5, 32, 32),
-	new THREE.MeshStandardMaterial({
-		metalness: 0.3,
-		roughness: 0.4,
-		envMap: environmentMapTexture,
-		envMapIntensity: 0.5,
-	})
-)
-sphere.castShadow = true
-sphere.position.y = 0.5
-scene.add(sphere) */
 
 /**
  * Floor
