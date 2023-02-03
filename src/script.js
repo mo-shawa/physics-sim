@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
 import CANNON from 'cannon'
+import { genRGBA } from 'culler'
 
 /**
  * Debug
@@ -79,12 +80,11 @@ world.allowSleep = true
 let objectsToUpdate = []
 
 const sphereGeometry = new THREE.SphereGeometry(1, 20, 20)
-const sphereMaterial = new THREE.MeshStandardMaterial({
-	metalness: 0.3,
-	roughness: 0.4,
-})
 
 const createSphere = (radius, position) => {
+	const sphereMaterial = new THREE.MeshToonMaterial({
+		color: genRGBA(),
+	})
 	const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial)
 	mesh.scale.set(radius, radius, radius)
 	mesh.castShadow = true
@@ -109,9 +109,11 @@ createSphere(0.5, { x: 1, y: 2, z: 3 })
 // Boxes
 
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1)
-const boxMaterial = new THREE.MeshToonMaterial()
 
 const createBox = (width, height, depth, position) => {
+	const boxMaterial = new THREE.MeshToonMaterial({
+		color: genRGBA(),
+	})
 	const mesh = new THREE.Mesh(boxGeometry, boxMaterial)
 	mesh.castShadow = true
 	mesh.position.copy(position)
@@ -150,7 +152,7 @@ world.addBody(floorBody)
  * Floor
  */
 const floor = new THREE.Mesh(
-	new THREE.PlaneGeometry(100, 100),
+	new THREE.PlaneGeometry(1000, 1000),
 	new THREE.MeshStandardMaterial({
 		color: '#777777',
 		metalness: 0.3,
